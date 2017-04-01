@@ -2,7 +2,7 @@
 一个简单的技能模板。
 
 ## 1 注册Rokid开发者账号
-免费注册一个Rokid开发者账号。
+在[Rokid开放平台](https://developer.rokid.com/)免费注册一个Rokid开发者账号。
 
 ## 2 创建一个技能
 登录Rokid开发后台，
@@ -27,7 +27,7 @@
 完成后请点击「下一步」。
 
 ## 3 定义技能的语音交互并进行后端配置
-首先请查看我们的[技能模板：我要喝咖啡](https://github.com/Rokid/rokid-skill-sample-java-tastecoffee)。
+首先请查看我们的[技能模板：我要喝咖啡](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java-tastecoffee)。
 
 #### 定义语音交互
 接着在「语音交互」页面中，
@@ -36,8 +36,10 @@
 2. 将模板工程 > voice-interaction中的`usersays.txt`文件内容，复制进「用户语句」编辑框。
 
 ![](images/14909727859931.jpg)
+> 把intent.json的内容复制进「意图定义」
 
 ![](images/14909728202671.jpg)
+> 把usersays.txt的内容复制进「用户语句」
 
 完成后请点击「下一步」。
 
@@ -61,7 +63,11 @@
 1. （可选）如果需要在机器上进行测试，请根据公司ID、设备Type ID、设备ID来「添加测试设备」。
 
 ![](images/14909730391112.jpg)
-![](images/14909730996331.jpg)
-![](images/14909731290205.jpg)
+> 此处使用：“打开「我要喝咖啡」”进行测试
 
+![](images/14909730996331.jpg)
+> 此处使用：“杭州哪里有好点的咖啡馆”进行测试
+
+![](images/14909731290205.jpg)
+> 此处使用：“米萨咖啡最好喝的是哪一种”进行测试
 
