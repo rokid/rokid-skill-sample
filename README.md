@@ -4,7 +4,6 @@
 
 ## 内容
 
-- Hello若琪：一个简单的示例技能，唤起后会说：“Hello若琪！”
 - [我要喝咖啡](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java-tastecoffee)：一个简单的示例技能，实现最简单的问答。
 
 

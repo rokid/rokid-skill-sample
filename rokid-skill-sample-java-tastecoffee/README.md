@@ -1,5 +1,12 @@
-# 技能模板：我要喝咖啡
-一个简单的技能模板。
+# 示例技能：我要喝咖啡
+
+## 您将学会
+- 如果通过6步快速创建一个Rokid技能。
+
+## 您需要
+- Rokid开发者账号
+- [GitHub](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java-tastecoffee)中的示例代码
+- 一台能够部署java代码的服务器
 
 ## 1 注册Rokid开发者账号
 在[Rokid开放平台](https://developer.rokid.com/)免费注册一个Rokid开发者账号。
@@ -70,4 +77,11 @@
 
 ![](images/14909731290205.jpg)
 > 此处使用：“米萨咖啡最好喝的是哪一种”进行测试
+
+
+### 5 自定义这个技能
+持续完善中。
+
+### 6 发布
+持续完善中。
 
