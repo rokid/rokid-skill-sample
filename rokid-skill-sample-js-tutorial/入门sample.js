@@ -20,7 +20,12 @@ exports.handler = function (event, context, callback) {
 
 var handlers = {
     'HELLO': function () {
-        this.emit(':tts', { tts: 'HELLO WORLD' });
+        try{
+            this.emit(':tts', { tts: 'HELLO WORLD' });
+            this.callback(null);
+        }catch(e){
+            this.callback(e);
+        }
     }
 };
 

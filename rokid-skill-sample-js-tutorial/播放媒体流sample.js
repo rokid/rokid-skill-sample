@@ -4,7 +4,7 @@
             "intent": "MediaRequest",
             "slots": [],
             "user_says": [
-                "放首诗词"
+                "播放"
             ]
         }
     ]
@@ -19,8 +19,13 @@ exports.handler = function (event, context, callback) {
 };
 var handlers = {
     'MediaRequest': function () {
-        this.emit(':media', { itemType: 'AUDIO', url: 's.rokidcdn.com/temp/rokid-ring.mp3' });
+        try{
+            this.emit(':media', { itemType: 'AUDIO', url: 's.rokidcdn.com/temp/rokid-ring.mp3' });
+            this.callback(null);
+        }catch(e){
+            this.callback(e);
+        }
     }
-}
+};
 
 //以上为js脚本demo

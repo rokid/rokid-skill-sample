@@ -32,11 +32,16 @@ var handlers = {
         this.emit('GetNewFactIntent');
     },
     'GetNewFactIntent': function () {
-        var factArr = data;
-        var factIndex = Math.floor(Math.random() * factArr.length);
-        var randomFact = factArr[factIndex];
-        var speechOutput = randomFact;
-        this.emit(':tts', {tts:speechOutput})
+        try{
+            var factArr = data;
+            var factIndex = Math.floor(Math.random() * factArr.length);
+            var randomFact = factArr[factIndex];
+            var speechOutput = randomFact;
+            this.emit(':tts', {tts:speechOutput});
+            this.callback(null);
+        }catch(e){
+            this.callback(e);
+        }
     }
 };
 
