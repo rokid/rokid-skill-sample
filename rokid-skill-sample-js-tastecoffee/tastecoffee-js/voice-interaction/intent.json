@@ -1,0 +1,21 @@
+{
+	"intents": [
+		{
+			"intent": "bestcoffeebar",
+			"slots": [],
+			"user_says": [
+				"杭州哪里有好点的咖啡馆",
+				"杭州哪里好点的咖啡馆",
+				"杭州哪里有好一点的咖啡馆"
+			]
+		},
+		{
+			"intent": "nicedrink",
+			"slots": [],
+			"user_says": [
+				"米萨咖啡哪种最好喝",
+				"米萨咖啡最好喝的是哪一种"
+			]
+		}
+	]
+}
