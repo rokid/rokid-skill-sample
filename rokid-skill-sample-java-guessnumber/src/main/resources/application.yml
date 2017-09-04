@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    schema: classpath:db/schema.sql
+    driver-class-name: org.h2.Driver
+  jooq:
+    sql-dialect: H2
+
+logging:
+  level:
+    org.jooq: debug
