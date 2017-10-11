@@ -13,6 +13,7 @@ sys.setdefaultencoding('utf-8')
 SSL_CONTEXT = ("test_domain.crt", "test_domain.key")
 app = Flask(__name__)
 
+
 @app.route('/', methods=["POST"])
 def request_handle():
     print request.data
@@ -39,14 +40,17 @@ def tts_response_format(tts):
             "action": {
                 "version": "2.0.0",
                 "type": "NORMAL",
-                "shoudEndSession": True,
-                "voice": {
-                    "needEventCallback": True,
-                    "behaviour": "APPEND",
-                    "item": {
-                        "tts": tts
+                "shoudEndSession": False,
+                "directives": [
+                    {
+                        "type": "voice",
+                        "needEventCallback": True,
+                        "behaviour": "APPEND",
+                        "item": {
+                            "tts": tts
+                        }
                     }
-                }
+                ]
             }
         }
     }
