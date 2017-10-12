@@ -1,10 +1,10 @@
 {
     "intents": [
         {
-            "intent": "MediaRequest",
+            "intent": "cardRequest",
             "slots": [],
             "user_says": [
-                "播放"
+                "用户登录"
             ]
         }
     ]
@@ -19,9 +19,10 @@ exports.handler = function (event, context, callback) {
 };
 
 var handlers = {
-    'MediaRequest': function () {
+    'cardRequest': function () {
         try {
-            this.setMedia({ type: 'AUDIO', url: 's.rokidcdn.com/temp/rokid-ring.mp3' });
+            this.setTts({tts: '请到手机上登录。' });
+            this.setCard('ACCOUNT_LINK');
             this.emit(':done');
         } catch (error) {
             this.emit(':error', error);

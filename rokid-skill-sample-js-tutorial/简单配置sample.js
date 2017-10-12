@@ -21,8 +21,8 @@ var data = [
 ];
 
 
-exports.handler = function(event, context, callback) {
-    var rokid = Rokid.handler(event, context,callback);
+exports.handler = function (event, context, callback) {
+    var rokid = Rokid.handler(event, context, callback);
     rokid.registerHandlers(handlers);
     rokid.execute();
 };
@@ -32,15 +32,15 @@ var handlers = {
         this.emit('GetNewFactIntent');
     },
     'GetNewFactIntent': function () {
-        try{
+        try {
             var factArr = data;
             var factIndex = Math.floor(Math.random() * factArr.length);
             var randomFact = factArr[factIndex];
             var speechOutput = randomFact;
-            this.emit(':tts', {tts:speechOutput});
-            this.callback(null);
-        }catch(e){
-            this.callback(e);
+            this.setTts({ tts: speechOutput });
+            this.emit(':done');
+        } catch (error) {
+            this.emit(':error', error);
         }
     }
 };

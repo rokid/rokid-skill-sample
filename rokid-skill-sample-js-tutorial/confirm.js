@@ -1,10 +1,10 @@
 {
     "intents": [
         {
-            "intent": "MediaRequest",
+            "intent": "confirmRequest",
             "slots": [],
             "user_says": [
-                "播放"
+                "多轮交互"
             ]
         }
     ]
@@ -19,9 +19,13 @@ exports.handler = function (event, context, callback) {
 };
 
 var handlers = {
-    'MediaRequest': function () {
+    'confirmRequest': function () {
         try {
-            this.setMedia({ type: 'AUDIO', url: 's.rokidcdn.com/temp/rokid-ring.mp3' });
+            this.setTts({tts: '欢迎成为Rokid开发者' });
+            this.setConfirm({
+                confirmIntent: 'question_one',
+                confirmSlot: 'question_one_slot'
+            })
             this.emit(':done');
         } catch (error) {
             this.emit(':error', error);

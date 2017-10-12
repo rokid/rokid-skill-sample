@@ -20,11 +20,11 @@ exports.handler = function (event, context, callback) {
 
 var handlers = {
     'HELLO': function () {
-        try{
-            this.emit(':tts', { tts: 'HELLO WORLD' });
-            this.callback(null);
-        }catch(e){
-            this.callback(e);
+        try {
+            this.setTts({ tts: 'HELLO WORLD' });
+            this.emit(':done');
+        } catch (error) {
+            this.emit(':error', error);
         }
     }
 };
