@@ -1,60 +1,44 @@
 //==================================================================config======================================================================
 //问题集
 var questions =[
-    {'name':'answer1','quotation':'question1'},  
-    {'name':'answer2','quotation':'question2'},  
-    {'name':'answer3','quotation':'question3'}  
+    {'name':'静夜思','quotation':'举头望明月，低头思故乡。'},
+    {'name':'九月九日忆山东兄弟','quotation':'独在异乡为异客，每逢佳节倍思亲。'},
 ];
 //问题播放类型 1:TTS 2:Media
 var questionPlayType=1;
 //游戏名
-var gameName="农药英雄竞猜";
+var gameName="唐诗知多少";
 //最多错误次数
 var maxErrorCount=3;
 //单题错误次数
 var maxSingleErrorCount=2;
 //游戏等级
-var gradeList=['青铜','白银','黄金','铂金','钻石','最强王者','荣耀王者'];
+var gradeList=['小学一年级','小学二年级','小学毕业'];
 //升级所需积分
-var singleGradeCount=5;
+var singleGradeCount=8;
 
 //流程TTS模板 {}部分可以删不能增加,其他部分任意修改
 //欢迎语
-var welcomeTemplate='欢迎来到{gameName},我会给出英雄语录,告诉我对应的英雄名字,你一共只有{maxErrorCount}次回答错误的机会，准备好了的话请对我说开始挑战';
+var welcomeTemplate='欢迎来到{gameName},我会给出唐诗语句,请告诉我对应的唐诗名字,你一共只有{maxErrorCount}次回答错误的机会';
 //答题引导语
-var guideTemplate='听声音,告诉我这是哪个英雄';
+var guideTemplate='听声音,告诉我这是哪首诗。';
 //单次回答错误
 var singleErrorTemplate='很遗憾,回答错误,你可以再答一次';
 //回答正确
-var rightTemplate='恭喜你答对了,请听下一题。{nextQuestion}';
+var rightTemplate='恭喜你答对了,请听下一题。';
 //回答错误
-var errorTemplate='回答错误,正确答案是,{rightAnswer},请听下一题。{nextQuestion}';
+var errorTemplate='回答错误,正确答案是,{rightAnswer},请听下一题。';
 //我不知道
 var unknownTemplate='正确答案是,{rightAnswer},请听下一题';
 //游戏结束
-var gameOverTemplate='正确答案是,{rightAnswer},游戏结束,共答对{rightCount}题,你的段位是{grade}.你可以对我说重新开始';
+var gameOverTemplate='正确答案是,{rightAnswer},游戏结束,共答对{rightCount}题,你的等级是{grade}.你可以对我说重新开始';
 //游戏通关
-var completeTemplate='恭喜你已经通关,共答对{rightCount}题,你的段位是{grade}';
+var completeTemplate='恭喜你已经通关,共答对{rightCount}题,你的等级是{grade}';
 //提示游戏已开始
-var startedTemplate='游戏已开始,你可以告诉我英雄名';
+var startedTemplate='游戏已开始,你可以告诉我唐诗名字';
 //提示游戏未开始
 var unStartTemplate='游戏还没开始,你可以对我说开始';
 //==================================================================private variable======================================================================
-
-// //错误列表
-// var errorList=[];
-// //正确列表
-// var rightList=[];
-// //未使用题目(记录questions的index)
-// var unusedList=[];
-// //状态： 0:未开始 1:游戏中
-// var state=0;
-// //单次回答错误次数
-// var errorCount=0;
-// //当前问题脚标
-// var questionIndex=0;
-// //当前未使用题目列表脚标
-// var unusedIndex=0;
 var gameData={
     "errorList":[],
     "rightList":[],
@@ -62,7 +46,8 @@ var gameData={
     "state":0,
     "singleErrorCount":0,
     "questionIndex":0,
-    "unusedIndex":0
+    "unusedIndex":0,
+    "answer":""
 }
 
 
@@ -92,7 +77,7 @@ function saveData2DbServer(context){
     var userId = Rokid.param.context.user.userId ? Rokid.param.context.user.userId : "test_user_id";
     Rokid.dbServer.set(userId, JSON.stringify(gameData),function(error, result){
         context.emit(':done');
-    }); 
+    });
 }
 
 
@@ -107,7 +92,8 @@ function init(context){
         "state":0,
         "singleErrorCount":0,
         "questionIndex":0,
-        "unusedIndex":0
+        "unusedIndex":0,
+        "answer":""
     };
     for (var index = 0; index < questions.length; index++) {
         gameData.unusedList.push(index);
@@ -119,10 +105,9 @@ function begin(context){
     if(!validateState(context,0)){
         return;
     }
-    generateNewQuestion(context);     
+    generateNewQuestion(context);
     gameData.state=1;
-    context.setTts({tts:guideTemplate.format()});
-    context.setMedia({ type: 'AUDIO', url: questions[gameData.questionIndex].quotation}); 
+    setResponse(guideTemplate.format(),context);
 }
 //我不知道
 function unknown(context){
@@ -130,14 +115,14 @@ function unknown(context){
         return;
     }
     gameData.errorList.push(gameData.questionIndex);
-    if(gameData.errorList.length==3){
+    gameData.unusedList.splice(gameData.unusedIndex,1);
+    if(gameData.errorList.length==3 || gameData.unusedList.length==0){
         gameOver(context);
     }else{
-        gameData.unusedList.splice(gameData.unusedIndex,1);
         gameData.singleErrorCount=0;
-        context.setTts({tts:unknownTemplate.format({"rightAnswer":questions[gameData.questionIndex].name})});
+        var unknownString=unknownTemplate.format({"rightAnswer":gameData.answer});
         generateNewQuestion();
-        context.setMedia({ type: 'AUDIO', url: questions[gameData.questionIndex].quotation});
+        setResponse(unknownString,context);
     }
 }
 
@@ -146,9 +131,8 @@ function answer(context){
     if(!validateState(context,1)){
         return;
     }
-    var answer=Rokid.param.request.content.slots.answer;    
-    var right=questions[gameData.questionIndex].name;
-    if(answer==right){
+    var answer=Rokid.param.request.content.slots.answer;
+    if(answer==gameData.answer){
         answerRight(context);
     }else{
         answerWrong(context);
@@ -160,13 +144,12 @@ function answerRight(context){
     gameData.rightList.push(gameData.questionIndex);
     gameData.unusedList.splice(gameData.unusedIndex,1);
     if(gameData.unusedList.length==0){
-        context.setTts({tts:completeTemplate.format({"rightCount":rightCount,"grade":getGrade()})});
+        context.setTts({tts:completeTemplate.format({"rightCount":gameData.rightList.length,"grade":getGrade()})});
         init(context);
     }else{
         generateNewQuestion();
         gameData.singleErrorCount=0;
-        context.setTts({tts:rightTemplate.format()});
-        context.setMedia({ type: 'AUDIO', url: questions[gameData.questionIndex].quotation});
+        setResponse(rightTemplate.format(),context);
     }
 }
 
@@ -182,16 +165,16 @@ function answerWrong(context){
         }else{
             gameData.unusedList.splice(gameData.unusedIndex,1);
             gameData.singleErrorCount=0;
-            context.setTts({tts:errorTemplate.format({"rightAnswer":questions[gameData.questionIndex].name})});
+            var errorString=errorTemplate.format({"rightAnswer":gameData.answer});
             generateNewQuestion();
-            context.setMedia({ type: 'AUDIO', url: questions[gameData.questionIndex].quotation});
+            setResponse(errorString,context);
         }
     }
 }
 
 //游戏结束
 function gameOver(context){
-    context.setTts({tts:gameOverTemplate.format({"rightAnswer":questions[gameData.questionIndex].name,"rightCount":rightCount,"grade":getGrade()})});
+    context.setTts({tts:gameOverTemplate.format({"rightAnswer":gameData.answer,"rightCount":gameData.rightList.length,"grade":getGrade()})});
     init(context);
 }
 
@@ -218,6 +201,7 @@ function getUnUsedQuestionIndex(){
 function generateNewQuestion(context){
     gameData.unusedIndex=getUnUsedQuestionIndex();
     gameData.questionIndex=gameData.unusedList[gameData.unusedIndex];
+    gameData.answer=questions[gameData.questionIndex].name;
 }
 
 function getGrade(){
@@ -225,16 +209,25 @@ function getGrade(){
     var grade=gradeList[Math.min(parseInt(rightCount/singleGradeCount),gradeList.length-1)];
     return grade;
 }
+//设置问题
+function setResponse(prefix,context){
+    if(questionPlayType==1){
+        context.setTts({tts:prefix+questions[gameData.questionIndex].quotation});
+    }else{
+        context.setTts({tts:prefix});
+        context.setMedia({ type: 'AUDIO', url: questions[gameData.questionIndex].quotation});
+    }
+}
 //==================================================================method tool======================================================================
 //生成0~maxInt之间的随机整数
 function randomInt(maxInt){
-    return Math.floor(Math.random()*(maxInt+1));
+    return Math.floor(Math.random()*(maxInt));
 }
 //字符串格式化
 String.prototype.format = function(args) {
     var result = this;
     if (arguments.length < 1) {
-        return result;
+        return result.toString();
     }
 
     var data = arguments;
@@ -247,7 +240,7 @@ String.prototype.format = function(args) {
             result = result.replace("{" + key + "}", value);
         }
     }
-    return result;
+    return result.toString();
 }
 
 //==================================================================注册======================================================================
@@ -256,7 +249,7 @@ exports.handler = function(event, context, callback) {
     rokid.registerHandlers(handlers);
     rokid.execute();
 };
-        
+
 var handlers = {
     'ROKID.INTENT.WELCOME':function() {
         try {
@@ -273,7 +266,7 @@ var handlers = {
             handle(self,begin);
         } catch (error) {
             self.emit(':error', error);
-        }        
+        }
     },
     'answer':function() {
         var self=this;
