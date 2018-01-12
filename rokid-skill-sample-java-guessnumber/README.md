@@ -1,4 +1,4 @@
-# SKILL JAVA SAMPLE - 猜数字
+# SKILL JAVA SAMPLE - 猜数字 (sdk已许久没更新，该技能只能当作参考)
 ## 基础环境
 
 * java version : 1.8+
