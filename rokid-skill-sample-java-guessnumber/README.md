@@ -15,6 +15,8 @@ $ cd rokid-skill-sdk/java/skill-kit
 $ mvn -U clean install
 ```
 
+**注** 该sdk版本的作者已许久不更新，已不可用
+
 ### 1.2 获取猜数字(java版) code
 编辑代码并生成可执行jar包
 
