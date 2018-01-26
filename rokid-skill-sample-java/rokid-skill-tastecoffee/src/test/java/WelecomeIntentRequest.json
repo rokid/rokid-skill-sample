@@ -1,0 +1,71 @@
+{
+	"context": {
+		"application": {
+			"applicationId": "R233A4F187F34C94B93EE3BAECFCE2E3",
+			"media": {
+				"state": "IDLE",
+				"itemId": "111",
+				"token": "12345",
+				"progress": "111",
+				"duration": "123"
+			},
+			"voice": {
+				"state": "IDLE",
+				"itemId": "111"
+			}
+		},
+		"device": {
+			"basic": {
+				"locale": "zh-cn",
+				"timestamp": 1478009510909,
+				"deviceId": "010116000100",
+				"deviceType": "allien",
+				"masterId": "13728027740",
+				"vendor": "910B21C0AF987D67AE7B2D50D6197421"
+			},
+			"screen": {
+				"x": "640",
+				"y": "480"
+			},
+			"media": {
+				"state": "IDLE"
+			},
+			"voice": {
+				"state": "IDLE"
+			},
+			"location": {
+				"latitude": "30.213322455923485",
+				"longitude": "120.01190010997654",
+				"country": "中国",
+				"state": "浙江",
+				"city": "杭州",
+				"area": "西湖区",
+				"district": "留下镇",
+				"street": "五常大道",
+				"timeZone": "时区"
+			}
+		},
+		"user": {
+			"userId": "13738027740"
+		}
+	},
+	"request": {
+		"content": {
+			"intent": "ROKID.INTENT.WELCOME",
+			"slots": {
+				"singer": "周杰伦",
+				"song": "蓝色天空"
+			}
+		},
+		"reqId": "7E06CFBDD5C243E0A6591A0E50A0B6BD",
+		"reqType": "INTENT"
+	},
+	"session": {
+		"attributes": {
+			
+		},
+		"newSession": false,
+		"sessionId": "2827B914E8194484AE7CBB3009768C5E"
+	},
+	"version": "2.0.0"
+}

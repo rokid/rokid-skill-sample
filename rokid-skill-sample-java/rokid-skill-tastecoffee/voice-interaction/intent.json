@@ -1,0 +1,26 @@
+{
+	"intents": [
+		{
+			"intent": "nicedrink",
+			"slots": [],
+			"user_says": [
+				"米萨咖啡最好喝的是哪一种",
+				"米萨咖啡哪种最好喝"
+			]
+		},
+		{
+			"intent": "bestcoffeebar",
+			"slots": [
+				{
+					"name": "city",
+					"type": "LIST_OF_CITIES"
+				}
+			],
+			"user_says": [
+				"$city哪里有好一点的咖啡馆",
+				"$city哪里有好点的咖啡馆",
+				"$city哪里好点的咖啡馆"
+			]
+		}
+	]
+}
