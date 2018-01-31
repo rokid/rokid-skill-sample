@@ -7,10 +7,10 @@
 #### 您需要准备
 
 1. [Rokid开发者账号](https://developer.rokid.com/#/)  
-2. 在 GitHub 中下载 [rokid-skill-sample-java](https://github.com/Rokid/rokid-skill-sample-java)源码，其中主要包括三部分：
--  [rokid-skill-tastecoffee](https://github.com/Rokid/rokid-skill-sample-java/tree/master/rokid-skill-tastecoffee)：我要喝咖啡 Demo Java 源码。
--  [rokid-skill-kit-java](https://github.com/Rokid/rokid-skill-sample-java/tree/master/rokid-skill-kit-java)：Skill 开发工具包。
--  [rokid-skill-protocol](https://github.com/Rokid/rokid-skill-sample-java/tree/master/rokid-skill-protocol)：Skill 开发协议。
+2. 在 GitHub 中下载 [rokid-skill-sample-java](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java)源码，其中主要包括三部分：
+-  [rokid-skill-tastecoffee](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java/rokid-skill-tastecoffee)：我要喝咖啡 Demo Java 源码。
+-  [rokid-skill-kit-java](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java/rokid-skill-kit-java)：Skill 开发工具包。
+-  [rokid-skill-protocol](https://github.com/Rokid/rokid-skill-sample/tree/master/rokid-skill-sample-java/rokid-skill-tastecoffee)：Skill 开发协议。
 ***
 
 ### 1.注册Rokid开发者账号
@@ -37,7 +37,7 @@
 ***
 ### 3.定义技能的语音交互并进行后端配置 ###
 ####（1）定义语音交互
-接着在「语音交互」页面中，在意图定义中的输入框中填入json格式的意图。json格式数据可参照我们制定的[模板](https://github.com/Rokid/rokid-skill-sample-java/tree/master/rokid-skill-tastecoffee/voice-interaction/intent.json)，复制里面的内容，放在图中意图定义里面。示例代码：
+接着在「语音交互」页面中，在意图定义中的输入框中填入json格式的意图。json格式数据可参照我们制定的[模板](https://github.com/Rokid/rokid-skill-sample/blob/master/rokid-skill-sample-java/rokid-skill-tastecoffee/voice-interaction/intent.json)，复制里面的内容，放在图中意图定义里面。示例代码：
 ```json
 {
 "intents": [
